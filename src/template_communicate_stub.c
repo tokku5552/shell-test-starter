@@ -1,5 +1,13 @@
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
+
+char *getmodulefilename()
+{
+    static char buf[1024] = {"\0"};
+    readlink("/proc/self/exe", buf, sizeof(buf) - 1);
+    return buf;
+}
 
 int main(int argc, char *argv[])
 {
@@ -43,7 +51,8 @@ int main(int argc, char *argv[])
 
     // ファイル読み込み
     char fname[64];
-    strcat(fname, t);
+    printf("%s\n", getmodulefilename());
+    sscanf(getmodulefilename(), "%s", &fname);
     strcat(fname, ".dat");
     FILE *fp;
     fp = fopen(fname, "r");
