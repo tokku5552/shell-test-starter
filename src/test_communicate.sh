@@ -1,9 +1,10 @@
 #!/bin/bash
 echo "start test"
-./template_communicate_stub << EOF
+./template_communicate_stub target / << EOF
   startup
   select instance_name,status from v\$instance;
   shutdown immediate
   exit
 EOF
+echo $?
 echo "done"
