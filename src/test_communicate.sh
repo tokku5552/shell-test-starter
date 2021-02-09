@@ -6,4 +6,5 @@ echo "start test"
   shutdown immediate
   exit
 EOF
+echo $?
 echo "done"
