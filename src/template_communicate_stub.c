@@ -1,29 +1,26 @@
 #include <stdio.h>
 
-int main(void)
+int main(int argc, char *argv[])
 {
+    int i;
 
+    for (i = 1; i < argc; i++)
+    {
+        printf("第%d引数：%s\n", i, argv[i]);
+    }
     char buffer[256] = "";
 
-    printf("Input: ");
+    printf("Communicate command start\n");
     while (1)
     {
 
         if (scanf("%255[^\n]%*[^\n]", buffer) == EOF)
         {
-            continue;
+            break;
         }
         scanf("%*c");
+        printf("Output: %s\n", buffer);
     }
-    printf("Output: %s\n", buffer);
+    printf("Communicate command end\n");
     return 0;
-
-    // int moji;
-
-    // while ((moji = getchar()) != EOF)
-    // {
-    //     printf("取得した文字:%c\n", moji);
-    // }
-
-    // return 0;
 }
