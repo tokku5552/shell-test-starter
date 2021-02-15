@@ -1,5 +1,15 @@
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
+
+// 実行コマンドのパスを取得するための関数
+// Linuxでのみ使用可能
+char *getfilepath()
+{
+    static char buf[1024] = {"\0"};
+    readlink("/proc/self/exe", buf, sizeof(buf) - 1);
+    return buf;
+}
 
 int main(int argc, char *argv[])
 {
@@ -30,11 +40,22 @@ int main(int argc, char *argv[])
     char buffer[256] = "";
 
     printf("\n---heredoc recieved from here---\n");
+    // ヒアドキュメントやターミナルからの入力を受け付けるループ部分
     while (1)
     {
         if (scanf("%255[^\n]%*[^\n]", buffer) == EOF)
         {
             break;
+        }
+        // exitが入力されたらループを抜ける
+        if (strstr(buffer, "exit") != NULL)
+        {
+            break;
+        }
+        // ある特定の文字が入力されたら異常終了させる
+        if (strstr(buffer, "special keyword") != NULL)
+        {
+            return 1;
         }
         scanf("%*c");
         printf("> %s\n", buffer);
@@ -43,7 +64,7 @@ int main(int argc, char *argv[])
 
     // ファイル読み込み
     char fname[64];
-    strcat(fname, t);
+    sscanf(getfilepath(), "%s", &fname);
     strcat(fname, ".dat");
     FILE *fp;
     fp = fopen(fname, "r");
