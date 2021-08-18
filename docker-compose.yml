@@ -1,0 +1,7 @@
+version: "3"
+services:
+  c_dev_env:
+    build: ./docker
+    container_name: c_dev_env
+    volumes:
+      - ./src:/workdir
