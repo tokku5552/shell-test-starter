@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
     // ヒアドキュメントの読み込み
     int i;
-    printf("実行コマンド: %s", t);
+    printf("run command: %s", t);
     for (i = 1; i < argc; i++)
     {
         printf(" %s", argv[i]);
