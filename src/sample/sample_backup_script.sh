@@ -2,7 +2,7 @@
 echo "sample backup script"
 
 echo "start test"
-../template_communicate_stub target / <<EOF
+sqlplus target / <<EOF
   startup
   select instance_name,status from v\$instance;
   shutdown immediate
