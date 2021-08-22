@@ -1,26 +1,27 @@
 #!/bin/bash
-echo "sample backup script"
-
 # Oracleのバックアップスクリプトの例
+
 logname="sample_backup_script.log"
 
+echo "INFO: sample backup script" >>$logname
+
 # インスタンスの起動状態確認
-sqlplus target / <<EOF
+sqlplus target / 2 &>1 >/dev/null <<EOF
   select instance_name,status from v\$instance;
 EOF
 ret=$?
 if [ ! $ret -eq 0 ]; then
-  echo "instance state incorrect" >>$logname
+  echo "ERROR: instance state incorrect" >>$logname
   exit 100
 fi
 
 # バックアップ処理
-rman target / <<EOF
+rman target / 2 &>1 >/dev/null <<EOF
   backup database;
 EOF
 ret=$?
 if [ ! $ret -eq 0 ]; then
-  echo "backup failure" >>$logname
+  echo "ERROR: backup failure" >>$logname
   exit 200
 fi
 
@@ -28,8 +29,8 @@ fi
 ./db_check.sh full
 ret=$?
 if [ ! $ret -eq 0 ]; then
-  echo "check failed " >>$logname
+  echo "ERROR: check failed " >>$logname
   exit 300
 fi
 
-echo "complete database backup"
+echo "INFO: complete database backup" >>$logname
