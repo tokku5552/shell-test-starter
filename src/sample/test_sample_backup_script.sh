@@ -1,37 +1,17 @@
 #!/bin/bash
 # this is sample test script
 
-echo "sample backup script"
+# 全てのスタブを0で返却する
+function allStateClear() {
+    echo 0 >./sqlplus.dat
+    echo 0 >./db_check.dat
+    echo 0 >./rman.dat
+}
 
-# Oracleのバックアップスクリプトの例
-logname="sample_backup_script.log"
+echo "begin sample backup script test"
+export PATH=./:$PATH
+allStateClear
+# test case 1 :
+./sample_backup_script.sh
 
-# インスタンスの起動状態確認
-sqlplus target / <<EOF
-  select instance_name,status from v\$instance;
-EOF
-ret=$?
-if [ ! $ret -eq 0 ]; then
-    echo "instance state incorrect" >>$logname
-    exit 100
-fi
-
-# バックアップ処理
-rman target / <<EOF
-  backup database;
-EOF
-ret=$?
-if [ ! $ret -eq 0 ]; then
-    echo "backup failure" >>$logname
-    exit 200
-fi
-
-# チェック処理
-./db_check.sh full
-ret=$?
-if [ ! $ret -eq 0 ]; then
-    echo "check failed " >>$logname
-    exit 300
-fi
-
-echo "complete database backup"
+echo "complete database backup test"
