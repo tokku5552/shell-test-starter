@@ -1,2 +1,8 @@
 # gitignore
 ./sample_backup_script.log
+./db_check.sh
+./db_check.dat
+./rman
+./rman.dat
+./sqlplus
+./sqlplus.dat
