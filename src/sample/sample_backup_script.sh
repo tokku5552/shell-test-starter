@@ -6,7 +6,7 @@ logname="sample_backup_script.log"
 echo "INFO: sample backup script" >>$logname
 
 # インスタンスの起動状態確認
-sqlplus target / 2 &>1 >/dev/null <<EOF
+sqlplus target / 2>&1 >/dev/null <<EOF
   select instance_name,status from v\$instance;
 EOF
 ret=$?
@@ -16,21 +16,21 @@ if [ ! $ret -eq 0 ]; then
 fi
 
 # バックアップ処理
-rman target / 2 &>1 >/dev/null <<EOF
+rman target / 2>&1 >/dev/null <<EOF
   backup database;
 EOF
 ret=$?
 if [ ! $ret -eq 0 ]; then
   echo "ERROR: backup failure" >>$logname
-  exit 200
+  exit 101
 fi
 
 # チェック処理
 ./db_check.sh full
 ret=$?
 if [ ! $ret -eq 0 ]; then
-  echo "ERROR: check failed " >>$logname
-  exit 300
+  echo "ERROR: check failed" >>$logname
+  exit 102
 fi
 
 echo "INFO: complete database backup" >>$logname
