@@ -2,7 +2,7 @@
 # this is sample test script
 logname="sample_backup_script.log"
 
-# 全てのスタブを0で返却する
+# function that returns all stubs with 0
 function allStateClear() {
     echo 0 >./sqlplus.dat
     echo 0 >./db_check.dat
@@ -11,7 +11,7 @@ function allStateClear() {
 
 echo "begin sample backup script test"
 export PATH=./:$PATH
-# test case 1 :正常系　完了した場合返却値が0であること
+# test case 1 : When completed, the return value must be 0
 allStateClear
 ./sample_backup_script.sh
 ret=$?
@@ -21,7 +21,7 @@ else
     echo "NG: test case 1 : [ret : ${ret}]"
 fi
 
-# test case 2 :正常系　ログにINFO: complete database backupと出力されていること
+# test case 2 : INFO: complete database backup is output to the log
 allStateClear
 ./sample_backup_script.sh
 ret=$(tail -n 1 $logname | grep "INFO: complete database backup" | wc -l)
@@ -31,7 +31,7 @@ else
     echo "NG: test case 2"
 fi
 
-# test case 3 :正常系　db_checkに引数fullが渡されていること
+# test case 3 : The argument full is passed to db_check
 allStateClear
 ./sample_backup_script.sh
 ret=$(tail -n 2 ./test_db_check.sh.log | grep "argument: full" | wc -l)
@@ -41,7 +41,8 @@ else
     echo "NG: test case 3"
 fi
 
-# test case 4 :インスタンス起動状態の確認に失敗した場合、返却値が100であること
+# test case 4 : If the confirmation of the instance startup status fails,
+#               the return value must be 100.
 allStateClear
 echo 1 >./sqlplus.dat
 ./sample_backup_script.sh
@@ -52,7 +53,8 @@ else
     echo "NG: test case 4 : [ret : ${ret}]"
 fi
 
-# test case 5 :インスタンス起動状態の確認に失敗した場合、エラーがログに出力されていること
+# test case 5 : If the confirmation of the instance startup status fails,
+#               an error has been output to the log.
 allStateClear
 echo 1 >./sqlplus.dat
 ./sample_backup_script.sh
@@ -63,7 +65,7 @@ else
     echo "NG: test case 5"
 fi
 
-# test case 6 :バックアップ処理に失敗した場合、返却値が200であること
+# test case 6 : If the backup process fails, the return value must be 200
 allStateClear
 echo 1 >./rman.dat
 ./sample_backup_script.sh
@@ -74,7 +76,7 @@ else
     echo "NG: test case 6 : [ret : ${ret}]"
 fi
 
-# test case 7 :バックアップ処理に失敗した場合、エラーがログに出力されていること
+# test case 7 : If the backup process fails, an error has been output to the log.
 allStateClear
 echo 1 >./rman.dat
 ./sample_backup_script.sh
@@ -85,7 +87,7 @@ else
     echo "NG: test case 7"
 fi
 
-# test case 8 :チェック処理に失敗した場合、返却値が300であること
+# test case 8 : If the check process fails, the return value must be 300
 allStateClear
 echo 1 >./db_check.dat
 ./sample_backup_script.sh
@@ -96,7 +98,7 @@ else
     echo "NG: test case 8 : [ret : ${ret}]"
 fi
 
-# test case 9 :チェック処理に失敗した場合、エラーがログに出力されていること
+# test case 9 : If the check process fails, an error has been output to the log.
 allStateClear
 echo 1 >./db_check.dat
 ./sample_backup_script.sh

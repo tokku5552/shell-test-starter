@@ -2,8 +2,8 @@
 #include <string.h>
 #include <unistd.h>
 
-// 実行コマンドのパスを取得するための関数
-// Linuxでのみ使用可能
+// Function to get the path of the execution command
+// Only available on Linux
 char *getfilepath()
 {
     static char buf[1024] = {"\0"};
@@ -13,24 +13,24 @@ char *getfilepath()
 
 int main(int argc, char *argv[])
 {
-    // argv[0](実行コマンド)の先頭が./であれば除去する
+    // If the beginning of argv[0] (execution command) is ./, remove it.
     char cmd_name[64];
     sscanf(argv[0], "%s", &cmd_name);
     char t[64];
     if (cmd_name[0] == '.' && cmd_name[1] == '/')
     {
-        // 含まれる場合
+        // included
         strncpy(t, cmd_name + 2, strlen(cmd_name) - 2);
         t[strlen(cmd_name) - 2] = '\0';
     }
     else
     {
-        // 含まれていない場合
+        // not included
         strncpy(t, cmd_name, strlen(cmd_name));
         t[strlen(cmd_name)] = '\0';
     }
 
-    // ヒアドキュメントの読み込み
+    // Reading here documents
     int i;
     printf("run command: %s", t);
     for (i = 1; i < argc; i++)
@@ -40,19 +40,19 @@ int main(int argc, char *argv[])
     char buffer[256] = "";
 
     printf("\n---heredoc recieved from here---\n");
-    // ヒアドキュメントやターミナルからの入力を受け付けるループ部分
+    // Loop part that accepts input from here documents and terminals
     while (1)
     {
         if (scanf("%255[^\n]%*[^\n]", buffer) == EOF)
         {
             break;
         }
-        // exitが入力されたらループを抜ける
+        // Exit the loop when exit is entered
         if (strstr(buffer, "exit") != NULL)
         {
             break;
         }
-        // ある特定の文字が入力されたら異常終了させる
+        // Abnormal termination when a specific character is entered
         if (strstr(buffer, "special keyword") != NULL)
         {
             return 1;
@@ -62,14 +62,14 @@ int main(int argc, char *argv[])
     }
     printf("---heredoc end---\n");
 
-    // ファイル読み込み
+    // File reading
     char fname[64];
     sscanf(getfilepath(), "%s", &fname);
     strcat(fname, ".dat");
     FILE *fp;
     fp = fopen(fname, "r");
 
-    // ファイルから値を取得しそのまま返却値として返却
+    // Get the value from the file and return it as it is
     int ret;
     while (fscanf(fp, "%d", &ret) != EOF)
     {
