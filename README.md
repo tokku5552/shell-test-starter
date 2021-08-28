@@ -10,7 +10,7 @@
 Starter kit for testing shell scripts.  
 You can easily create stub commands and commands that can receive here documents.
 
-# Usage
+# Quick Start
 
 First, go to `sample` and run `setup.sh`
 
@@ -53,9 +53,48 @@ INFO: remove db_check.dat
 INFO: all done!
 ```
 
+# Usage
+
+modify `sample/setup.sh` to generate the required stub commands.  
+when executing the test shell, execute the following in the initialization process to start the stub.
+
+```
+export PATH=./:$PATH
+```
+
+In the test shell, the success or failure of the test is determined by judging the return value of the command executed by the target script and the log output when added.
+
+- return value
+
+```
+./sample_backup_script.sh
+ret=$?
+if [ $ret -eq 0 ]; then
+    echo "OK: test case 1"
+else
+    echo "NG: test case 1 : [ret : ${ret}]"
+fi
+```
+
+- log keyword
+
+```
+./sample_backup_script.sh
+ret=$(tail -n 1 $logname | grep "INFO: complete database backup" | wc -l)
+if [ $ret -eq 1 ]; then
+    echo "OK: test case 2"
+else
+    echo "NG: test case 2"
+fi
+```
+
 # Requires
 
 - Docker Engine or Linux OS
+
+This starter only works on Linux  
+We have confirmed the operation on CentOS7.  
+It has not been confirmed to work with other distributions, but I think it will probably work.
 
 # Command Tips
 
