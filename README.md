@@ -7,6 +7,9 @@
 ![GitHub](https://img.shields.io/github/license/tokku5552/shell-test-starter)
 ![Twitter Follow](https://img.shields.io/twitter/follow/tokkuu?color=green&style=flat)
 
+Starter kit for testing shell scripts.  
+You can easily create stub commands and commands that can receive here documents.
+
 # Usage
 
 First, go to `sample` and run `setup.sh`
