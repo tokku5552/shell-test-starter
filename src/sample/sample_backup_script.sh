@@ -1,11 +1,11 @@
 #!/bin/bash
-# Oracleのバックアップスクリプトの例
+# Oracle backup script example
 
 logname="sample_backup_script.log"
 
 echo "INFO: sample backup script" >>$logname
 
-# インスタンスの起動状態確認
+# Check the startup status of the instance
 sqlplus target / 2>&1 >/dev/null <<EOF
   select instance_name,status from v\$instance;
 EOF
@@ -15,7 +15,7 @@ if [ ! $ret -eq 0 ]; then
   exit 100
 fi
 
-# バックアップ処理
+# Backup process
 rman target / 2>&1 >/dev/null <<EOF
   backup database;
 EOF
@@ -25,7 +25,7 @@ if [ ! $ret -eq 0 ]; then
   exit 101
 fi
 
-# チェック処理
+# Check processing
 ./db_check.sh full
 ret=$?
 if [ ! $ret -eq 0 ]; then
