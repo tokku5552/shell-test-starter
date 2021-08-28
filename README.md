@@ -1,7 +1,11 @@
-![](images\shellteststarter_banner.png)
-書くこと
+![](images/shellteststarter_banner.png)
 
-- Linux でしかつかえない
+![Linux](https://img.shields.io/badge/-Linux-6C6694.svg?logo=linux&style=flat)
+![CentOS](https://img.shields.io/badge/CentOS-latest-EEE.svg?color=blue&logo=centos&style=flat)
+![Docker](https://img.shields.io/badge/-Docker-EEE.svg?logo=docker&style=flat)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/tokku5552/shell-test-starter)
+![GitHub](https://img.shields.io/github/license/tokku5552/shell-test-starter)
+![Twitter Follow](https://img.shields.io/twitter/follow/tokkuu?color=green&style=flat)
 
 # Usage
 
@@ -80,6 +84,18 @@ docker-compose down
 ```
 docker-compose down --rmi all
 ```
+
+# Author
+
+<img src ="https://github.com/tokku5552.png" width=140>
+
+**tokku5552**
+
+Engineering Manager in Tokyo Japan.  
+Flutter/Next.js/Node.js/python/RHEL/Oracle/AWS/Docker
+
+- [Twitter](https://twitter.com/tokkuu) / [Facebook](https://www.facebook.com/tokkuatggrks)
+- [LinkedIn](https://www.linkedin.com/in/shinnosuke-tokuda-853b78207/) / [Wantedly](https://www.wantedly.com/id/shinnosuke_tokuda)
 
 # License
 
